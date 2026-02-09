@@ -11,7 +11,7 @@ import { connectDB } from '../db/db.js';
 import { app ,server} from '../lib/socket.js';
 //App initialization
 dotenv.config();
-const PORT =process.env(PORT)
+const PORT = process.env.PORT || 5000
 const __dirname=path.resolve()
 
 //Middleware
@@ -21,6 +21,7 @@ app.use(
   origin:"http://localhost:5173",
   credentials:true,
 }));
+
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 //Routes
@@ -35,12 +36,8 @@ if(process.env.NODE_ENV === "production"){
   })
 }
 
-app.get("/",(req,res)=>{
-    res.status(200).send("Server is running...")
-});
-
 //Starting server
 server.listen(PORT, () => {
   connectDB();
-  console.log('Server is running on port :'+ PORT);
+  console.log('Server is running on port :', PORT);
 });
